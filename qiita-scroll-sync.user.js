@@ -45,7 +45,9 @@ window.addEventListener("DOMContentLoaded", () => {
         if (editor.scrollTop === editor.scrollHeight - editor.clientHeight) {
             // スクロール末尾でなおスクロールしようとしている場合
             const y = editor.style.paddingBottom ? parseFloat(editor.style.paddingBottom) : padding;
-            const deltaY = e.deltaMode === WheelEvent.DOM_DELTA_LINE ? e.deltaY * lineHeight : e.deltaY;
+            const deltaY = e.deltaMode === WheelEvent.DOM_DELTA_PAGE ? editor.clientHeight :
+                e.deltaMode === WheelEvent.DOM_DELTA_LINE ? e.deltaY * lineHeight :
+                    e.deltaY;
             const sum = y + deltaY;
             if (deltaY < 0 || sum < editor.clientHeight) {
                 // padding-bottomを増やしてスクロールしているように見せかける
@@ -81,7 +83,7 @@ window.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    // 見出しに合わせてスクロールするscrollイベント
+    // 見出しに合わせてスクロールする
     const handleScroll = () => {
         const viewer = document.querySelector(".editorPreview_article");
         if (!viewer) {
