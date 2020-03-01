@@ -40,7 +40,7 @@ window.addEventListener("DOMContentLoaded", () => {
     textarea.readOnly = true;
     document.querySelector(".editorMarkdown_textareaWrapper").append(textarea);
 
-    // スクロールの下限をなくすように見せかけるwheelイベント
+    // スクロールの下限をなくすように見せかける
     const handleWheel = e => {
         if (editor.scrollTop === editor.scrollHeight - editor.clientHeight) {
             // スクロール末尾でなおスクロールしようとしている場合
@@ -57,7 +57,7 @@ window.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    // エディタにpadding-bottomを設定しているのをごまかすinputイベント
+    // エディタにpadding-bottomを設定しているのをごまかす
     const handleInput = () => {
         if (editor.style.paddingBottom) {
             const paddingBottom = parseFloat(editor.style.paddingBottom);
@@ -69,8 +69,16 @@ window.addEventListener("DOMContentLoaded", () => {
                 editor.style.paddingBottom = y + "px";
             }
         }
-        // 入力のたびにプレビューのスクロール位置が0にされるのを無理やり修正
-        setTimeout(handleScroll, 10);
+        const viewer = document.querySelector(".editorPreview_article");
+        if (viewer) {
+            // 入力のたびにプレビューのスクロール位置が0にされるのを無理やり修正
+            const disableScroll = () => {
+                // スクロール位置を再計算し、一度再計算したらイベントリスナを削除する
+                handleScroll();
+                viewer.removeEventListener("scroll", disableScroll);
+            };
+            viewer.addEventListener("scroll", disableScroll);
+        }
     };
 
     // 見出しに合わせてスクロールするscrollイベント
@@ -95,7 +103,7 @@ window.addEventListener("DOMContentLoaded", () => {
         viewer.scrollTop = i === x.length - 1 ? y[y.length - 1] : (y[i + 1] - y[i]) / (x[i + 1] - x[i]) * (editor.scrollTop - x[i]) + y[i];
     };
 
-    // プレビューの変更時に見出しの座標を計算するイベント
+    // プレビューの変更時に見出しの座標を計算する
     const handleMutation = async () => {
         const viewer = document.querySelector(".editorPreview_article");
         if (!viewer) {
@@ -162,7 +170,7 @@ window.addEventListener("DOMContentLoaded", () => {
         handleScroll();
     };
 
-    // エディタのスクロールにイベントを設定する
+    // エディタに各イベントリスナを設定する
     editor.addEventListener("scroll", handleScroll);
     editor.addEventListener("wheel", handleWheel);
     editor.addEventListener("input", handleInput);
