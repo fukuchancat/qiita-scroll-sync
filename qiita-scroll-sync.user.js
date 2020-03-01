@@ -41,7 +41,7 @@ window.addEventListener("DOMContentLoaded", () => {
     document.querySelector(".editorMarkdown_textareaWrapper").append(textarea);
 
     // スクロールの下限をなくすように見せかけるwheelイベント
-    const wheelEvent = e => {
+    const handleWheel = e => {
         if (editor.scrollTop === editor.scrollHeight - editor.clientHeight) {
             // スクロール末尾でなおスクロールしようとしている場合
             const y = editor.style.paddingBottom ? parseFloat(editor.style.paddingBottom) : padding;
@@ -58,7 +58,7 @@ window.addEventListener("DOMContentLoaded", () => {
     };
 
     // エディタにpadding-bottomを設定しているのをごまかすinputイベント
-    const inputEvent = () => {
+    const handleInput = () => {
         if (editor.style.paddingBottom) {
             const paddingBottom = parseFloat(editor.style.paddingBottom);
             // padding-bottomが設定されている場合
@@ -70,11 +70,11 @@ window.addEventListener("DOMContentLoaded", () => {
             }
         }
         // 入力のたびにプレビューのスクロール位置が0にされるのを無理やり修正
-        setTimeout(scrollEvent, 10);
+        setTimeout(handleScroll, 10);
     };
 
     // 見出しに合わせてスクロールするscrollイベント
-    const scrollEvent = () => {
+    const handleScroll = () => {
         const viewer = document.querySelector(".editorPreview_article");
         if (!viewer) {
             // プレビュー非表示モードなら何もしない
@@ -96,7 +96,7 @@ window.addEventListener("DOMContentLoaded", () => {
     };
 
     // プレビューの変更時に見出しの座標を計算するイベント
-    const mutationEvent = async () => {
+    const handleMutation = async () => {
         const viewer = document.querySelector(".editorPreview_article");
         if (!viewer) {
             // プレビュー非表示モードなら何もしない
@@ -159,18 +159,18 @@ window.addEventListener("DOMContentLoaded", () => {
         target.style.marginBottom = viewer.clientHeight + "px";
 
         // スクロール位置を修正
-        scrollEvent();
+        handleScroll();
     };
 
     // エディタのスクロールにイベントを設定する
-    editor.addEventListener("scroll", scrollEvent);
-    editor.addEventListener("wheel", wheelEvent);
-    editor.addEventListener("input", inputEvent);
+    editor.addEventListener("scroll", handleScroll);
+    editor.addEventListener("wheel", handleWheel);
+    editor.addEventListener("input", handleInput);
 
     // プレビューの変更・レイアウトの変更・ウィンドウのリサイズを監視
-    new MutationObserver(mutationEvent).observe(document.querySelector(".editorPreview"), {
+    new MutationObserver(handleMutation).observe(document.querySelector(".editorPreview"), {
         childList: true,
         subtree: true
     });
-    window.addEventListener("resize", mutationEvent);
+    window.addEventListener("resize", handleMutation);
 });
