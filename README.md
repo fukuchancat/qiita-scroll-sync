@@ -10,5 +10,5 @@ Qiitaの投稿画面のエディタ(左)・プレビュー(右)の同時スク�
 
 [GreaseyFork](https://greasyfork.org/ja/scripts/397153-qiita%E5%90%8C%E6%99%82%E3%82%B9%E3%82%AF%E3%83%AD%E3%83%BC%E3%83%AB)
 
-[Qiita(解説記事)](https://qiita.com/m_fukuchan/items/7485b68b20f6c2897821)
+[Qiita(解説記事)](https://qiita.com/m_fukuchan/items/2a0c1f7b45894449ff56)
 
