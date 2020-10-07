@@ -179,7 +179,7 @@ window.addEventListener("DOMContentLoaded", () => {
     editor.addEventListener("input", handleInput);
 
     // プレビューの変更・レイアウトの変更・ウィンドウのリサイズを監視
-    new MutationObserver(handleMutation).observe(document.querySelector(".it-MdContent"), {
+    new MutationObserver(handleMutation).observe(document.querySelector(".css-g26s69.e1u1mup114"), {
         childList: true,
         subtree: true
     });
