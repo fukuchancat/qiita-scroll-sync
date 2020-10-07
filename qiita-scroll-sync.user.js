@@ -109,11 +109,11 @@ window.addEventListener("DOMContentLoaded", () => {
     // プレビューの変更時に見出しの座標を計算する
     const handleMutation = async () => {
         const viewer = document.querySelector(".it-MdContent").parentElement;
-        viewer.style.position = "relative";
         if (!viewer) {
             // プレビュー非表示モードなら何もしない
             return;
         }
+        viewer.style.position = "relative";
         const target = viewer.children[0];
 
         // エディターにおける各見出し位置を求める
