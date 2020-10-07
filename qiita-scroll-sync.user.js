@@ -1,6 +1,5 @@
 // ==UserScript==
 // @name         Qiita同時スクロール
-// @version      0.1
 // @description  Qiitaの投稿画面のエディター(左)・プレビュー(右)の同時スクロールを改善し、各見出しを基準にスクロール位置を合わせるようにする。
 // @author       fukuchan
 // @match        *://*.qiita.com/drafts/new
