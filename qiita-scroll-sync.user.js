@@ -20,7 +20,7 @@ Document.prototype.addEventListener = function (type, listener, useCapture = fal
 // ロード後に実行
 window.addEventListener("DOMContentLoaded", () => {
     // エディターを取得
-    const editor = document.querySelector(".editorMarkdown_textarea");
+    const editor = document.querySelector("textarea[placeholder='プログラミング知識をMarkdown記法で書いて共有しよう']");
 
     // エディターのスタイルを取得
     const style = getComputedStyle(editor);
@@ -38,7 +38,8 @@ window.addEventListener("DOMContentLoaded", () => {
     textarea.style.width = "100%";
     textarea.style.height = (padding * 2 + lineHeight) + "px";
     textarea.readOnly = true;
-    document.querySelector(".editorMarkdown_textareaWrapper").append(textarea);
+    editor.parentElement.style.position = "relative";
+    editor.parentElement.append(textarea);
 
     // スクロールの下限をなくすように見せかける
     const handleWheel = e => {
@@ -71,7 +72,7 @@ window.addEventListener("DOMContentLoaded", () => {
                 editor.style.paddingBottom = y + "px";
             }
         }
-        const viewer = document.querySelector(".editorPreview_article");
+        const viewer = document.querySelector(".it-MdContent").parentElement;
         if (viewer) {
             // 入力のたびにプレビューのスクロール位置が0にされるのを無理やり修正
             const disableScroll = () => {
@@ -85,7 +86,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
     // 見出しに合わせてスクロールする
     const handleScroll = () => {
-        const viewer = document.querySelector(".editorPreview_article");
+        const viewer = document.querySelector(".it-MdContent").parentElement;
         if (!viewer) {
             // プレビュー非表示モードなら何もしない
             return;
@@ -107,7 +108,8 @@ window.addEventListener("DOMContentLoaded", () => {
 
     // プレビューの変更時に見出しの座標を計算する
     const handleMutation = async () => {
-        const viewer = document.querySelector(".editorPreview_article");
+        const viewer = document.querySelector(".it-MdContent").parentElement;
+        viewer.style.position = "relative";
         if (!viewer) {
             // プレビュー非表示モードなら何もしない
             return;
@@ -178,7 +180,7 @@ window.addEventListener("DOMContentLoaded", () => {
     editor.addEventListener("input", handleInput);
 
     // プレビューの変更・レイアウトの変更・ウィンドウのリサイズを監視
-    new MutationObserver(handleMutation).observe(document.querySelector(".editorPreview"), {
+    new MutationObserver(handleMutation).observe(document.querySelector(".it-MdContent"), {
         childList: true,
         subtree: true
     });
